@@ -1,0 +1,1621 @@
+
+interfacing_abdel_ghafar.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000007d6  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000022  00800060  000007d6  0000084a  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000086c  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000089c  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000128  00000000  00000000  000008d8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00001b7a  00000000  00000000  00000a00  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000b23  00000000  00000000  0000257a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000ba3  00000000  00000000  0000309d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000294  00000000  00000000  00003c40  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000007fc  00000000  00000000  00003ed4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000eec  00000000  00000000  000046d0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 000000d8  00000000  00000000  000055bc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e6 ed       	ldi	r30, 0xD6	; 214
+  68:	f7 e0       	ldi	r31, 0x07	; 7
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a2 38       	cpi	r26, 0x82	; 130
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 27 02 	call	0x44e	; 0x44e <main>
+  7a:	0c 94 e9 03 	jmp	0x7d2	; 0x7d2 <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <ecu_button_intialize>:
+ */ 
+
+#include "ecu_button.h"
+
+std_ReturnType ecu_button_intialize (const button_t *button   )
+{
+  82:	cf 93       	push	r28
+  84:	df 93       	push	r29
+  86:	1f 92       	push	r1
+  88:	cd b7       	in	r28, 0x3d	; 61
+  8a:	de b7       	in	r29, 0x3e	; 62
+	uint8 ret = E_OK ;
+	if (NULL == button )
+  8c:	00 97       	sbiw	r24, 0x00	; 0
+  8e:	c9 f0       	breq	.+50     	; 0xc2 <ecu_button_intialize+0x40>
+  90:	fc 01       	movw	r30, r24
+	}
+	else {
+		pin_config_t pin_obj  = {
+			.direction = GPIO_PIN_INPUT ,
+			.pin = button->pin,
+			.port = button->port_name ,
+  92:	90 81       	ld	r25, Z
+  94:	29 2f       	mov	r18, r25
+  96:	27 70       	andi	r18, 0x07	; 7
+	if (NULL == button )
+	{
+		ret = E_NOT_OK;
+	}
+	else {
+		pin_config_t pin_obj  = {
+  98:	89 81       	ldd	r24, Y+1	; 0x01
+  9a:	88 7f       	andi	r24, 0xF8	; 248
+  9c:	82 2b       	or	r24, r18
+			.direction = GPIO_PIN_INPUT ,
+			.pin = button->pin,
+  9e:	96 95       	lsr	r25
+  a0:	96 95       	lsr	r25
+  a2:	96 95       	lsr	r25
+	if (NULL == button )
+	{
+		ret = E_NOT_OK;
+	}
+	else {
+		pin_config_t pin_obj  = {
+  a4:	97 70       	andi	r25, 0x07	; 7
+  a6:	99 0f       	add	r25, r25
+  a8:	99 0f       	add	r25, r25
+  aa:	99 0f       	add	r25, r25
+  ac:	87 7c       	andi	r24, 0xC7	; 199
+  ae:	89 2b       	or	r24, r25
+  b0:	8f 7b       	andi	r24, 0xBF	; 191
+  b2:	8f 77       	andi	r24, 0x7F	; 127
+  b4:	89 83       	std	Y+1, r24	; 0x01
+			.pin = button->pin,
+			.port = button->port_name ,
+			.logic = LOW
+			
+		};
+		gpio_pin_intialize (&pin_obj) ;
+  b6:	ce 01       	movw	r24, r28
+  b8:	01 96       	adiw	r24, 0x01	; 1
+  ba:	0e 94 4e 03 	call	0x69c	; 0x69c <gpio_pin_intialize>
+
+#include "ecu_button.h"
+
+std_ReturnType ecu_button_intialize (const button_t *button   )
+{
+	uint8 ret = E_OK ;
+  be:	81 e0       	ldi	r24, 0x01	; 1
+  c0:	01 c0       	rjmp	.+2      	; 0xc4 <ecu_button_intialize+0x42>
+	if (NULL == button )
+	{
+		ret = E_NOT_OK;
+  c2:	80 e0       	ldi	r24, 0x00	; 0
+		};
+		gpio_pin_intialize (&pin_obj) ;
+	}
+	return ret  ;
+	
+}
+  c4:	0f 90       	pop	r0
+  c6:	df 91       	pop	r29
+  c8:	cf 91       	pop	r28
+  ca:	08 95       	ret
+
+000000cc <ecu_button_read_state>:
+
+
+
+std_ReturnType ecu_button_read_state (const button_t *button  , button_state_t *button_state )
+{
+  cc:	ef 92       	push	r14
+  ce:	ff 92       	push	r15
+  d0:	0f 93       	push	r16
+  d2:	1f 93       	push	r17
+  d4:	cf 93       	push	r28
+  d6:	df 93       	push	r29
+  d8:	00 d0       	rcall	.+0      	; 0xda <ecu_button_read_state+0xe>
+  da:	cd b7       	in	r28, 0x3d	; 61
+  dc:	de b7       	in	r29, 0x3e	; 62
+	uint8 ret= E_OK ;
+	*button_state = BUTTON_UN_PRESSED ;
+  de:	21 e0       	ldi	r18, 0x01	; 1
+  e0:	fb 01       	movw	r30, r22
+  e2:	20 83       	st	Z, r18
+	logic_t button_logic = LOW ;
+  e4:	19 82       	std	Y+1, r1	; 0x01
+	if(NULL == button || NULL == button_state)
+  e6:	00 97       	sbiw	r24, 0x00	; 0
+  e8:	e9 f1       	breq	.+122    	; 0x164 <ecu_button_read_state+0x98>
+  ea:	61 15       	cp	r22, r1
+  ec:	71 05       	cpc	r23, r1
+  ee:	e1 f1       	breq	.+120    	; 0x168 <ecu_button_read_state+0x9c>
+  f0:	8b 01       	movw	r16, r22
+  f2:	7c 01       	movw	r14, r24
+	else {
+		
+		pin_config_t pin_obj  = {
+			.direction = GPIO_PIN_INPUT ,
+			.pin = button->pin,
+			.port= button->port_name ,
+  f4:	fc 01       	movw	r30, r24
+  f6:	20 81       	ld	r18, Z
+  f8:	82 2f       	mov	r24, r18
+  fa:	87 70       	andi	r24, 0x07	; 7
+	{
+		ret= E_NOT_OK ;
+	}
+	else {
+		
+		pin_config_t pin_obj  = {
+  fc:	9a 81       	ldd	r25, Y+2	; 0x02
+  fe:	98 7f       	andi	r25, 0xF8	; 248
+ 100:	98 2b       	or	r25, r24
+			.direction = GPIO_PIN_INPUT ,
+			.pin = button->pin,
+ 102:	26 95       	lsr	r18
+ 104:	26 95       	lsr	r18
+ 106:	26 95       	lsr	r18
+	{
+		ret= E_NOT_OK ;
+	}
+	else {
+		
+		pin_config_t pin_obj  = {
+ 108:	27 70       	andi	r18, 0x07	; 7
+ 10a:	22 0f       	add	r18, r18
+ 10c:	22 0f       	add	r18, r18
+ 10e:	22 0f       	add	r18, r18
+ 110:	97 7c       	andi	r25, 0xC7	; 199
+ 112:	92 2b       	or	r25, r18
+ 114:	9f 7b       	andi	r25, 0xBF	; 191
+ 116:	9f 77       	andi	r25, 0x7F	; 127
+ 118:	9a 83       	std	Y+2, r25	; 0x02
+			.pin = button->pin,
+			.port= button->port_name ,
+			.logic = LOW
+			
+		};
+		ret = gpio_pin_read_logic(&pin_obj , &button_logic );
+ 11a:	be 01       	movw	r22, r28
+ 11c:	6f 5f       	subi	r22, 0xFF	; 255
+ 11e:	7f 4f       	sbci	r23, 0xFF	; 255
+ 120:	ce 01       	movw	r24, r28
+ 122:	02 96       	adiw	r24, 0x02	; 2
+ 124:	0e 94 63 03 	call	0x6c6	; 0x6c6 <gpio_pin_read_logic>
+		
+		if (BUTTON_ACTIVE_HIGH == button->button_state)
+ 128:	f7 01       	movw	r30, r14
+ 12a:	90 81       	ld	r25, Z
+ 12c:	29 2f       	mov	r18, r25
+ 12e:	20 74       	andi	r18, 0x40	; 64
+ 130:	96 ff       	sbrs	r25, 6
+ 132:	0a c0       	rjmp	.+20     	; 0x148 <ecu_button_read_state+0x7c>
+		{
+			if (button_logic == HIGH  )
+ 134:	99 81       	ldd	r25, Y+1	; 0x01
+ 136:	91 30       	cpi	r25, 0x01	; 1
+ 138:	19 f4       	brne	.+6      	; 0x140 <ecu_button_read_state+0x74>
+			{
+				*button_state = BUTTON_PRESSED ;
+ 13a:	f8 01       	movw	r30, r16
+ 13c:	10 82       	st	Z, r1
+ 13e:	15 c0       	rjmp	.+42     	; 0x16a <ecu_button_read_state+0x9e>
+			}
+			else {
+				*button_state = BUTTON_UN_PRESSED ;
+ 140:	91 e0       	ldi	r25, 0x01	; 1
+ 142:	f8 01       	movw	r30, r16
+ 144:	90 83       	st	Z, r25
+ 146:	11 c0       	rjmp	.+34     	; 0x16a <ecu_button_read_state+0x9e>
+			}
+		}
+		else if (BUTTON_ACTIVE_LOW == button->button_state)
+ 148:	21 11       	cpse	r18, r1
+ 14a:	0a c0       	rjmp	.+20     	; 0x160 <ecu_button_read_state+0x94>
+		{
+			if (button_logic == LOW  )
+ 14c:	99 81       	ldd	r25, Y+1	; 0x01
+ 14e:	91 11       	cpse	r25, r1
+ 150:	03 c0       	rjmp	.+6      	; 0x158 <ecu_button_read_state+0x8c>
+			{
+				*button_state = BUTTON_PRESSED ;
+ 152:	f8 01       	movw	r30, r16
+ 154:	10 82       	st	Z, r1
+ 156:	09 c0       	rjmp	.+18     	; 0x16a <ecu_button_read_state+0x9e>
+			}
+			else {
+				*button_state = BUTTON_UN_PRESSED ;
+ 158:	91 e0       	ldi	r25, 0x01	; 1
+ 15a:	f8 01       	movw	r30, r16
+ 15c:	90 83       	st	Z, r25
+ 15e:	05 c0       	rjmp	.+10     	; 0x16a <ecu_button_read_state+0x9e>
+			}
+			
+		}
+		else {
+			ret = E_NOT_OK ;
+ 160:	80 e0       	ldi	r24, 0x00	; 0
+ 162:	03 c0       	rjmp	.+6      	; 0x16a <ecu_button_read_state+0x9e>
+	uint8 ret= E_OK ;
+	*button_state = BUTTON_UN_PRESSED ;
+	logic_t button_logic = LOW ;
+	if(NULL == button || NULL == button_state)
+	{
+		ret= E_NOT_OK ;
+ 164:	80 e0       	ldi	r24, 0x00	; 0
+ 166:	01 c0       	rjmp	.+2      	; 0x16a <ecu_button_read_state+0x9e>
+ 168:	80 e0       	ldi	r24, 0x00	; 0
+		}
+		
+	}
+	return ret ;
+	
+}
+ 16a:	0f 90       	pop	r0
+ 16c:	0f 90       	pop	r0
+ 16e:	df 91       	pop	r29
+ 170:	cf 91       	pop	r28
+ 172:	1f 91       	pop	r17
+ 174:	0f 91       	pop	r16
+ 176:	ff 90       	pop	r15
+ 178:	ef 90       	pop	r14
+ 17a:	08 95       	ret
+
+0000017c <ecu_led_initialize>:
+ *  Author: engmu
+ */ 
+#include "ecu_led.h"
+
+std_ReturnType ecu_led_initialize (const led_t *led)
+{
+ 17c:	cf 93       	push	r28
+ 17e:	df 93       	push	r29
+ 180:	1f 92       	push	r1
+ 182:	cd b7       	in	r28, 0x3d	; 61
+ 184:	de b7       	in	r29, 0x3e	; 62
+	uint8 ret = E_OK ;
+	if (NULL == led )
+ 186:	00 97       	sbiw	r24, 0x00	; 0
+ 188:	e9 f0       	breq	.+58     	; 0x1c4 <ecu_led_initialize+0x48>
+ 18a:	fc 01       	movw	r30, r24
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+			.port = led ->port_name ,
+ 18c:	20 81       	ld	r18, Z
+ 18e:	92 2f       	mov	r25, r18
+ 190:	97 70       	andi	r25, 0x07	; 7
+	{
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+ 192:	89 81       	ldd	r24, Y+1	; 0x01
+ 194:	88 7f       	andi	r24, 0xF8	; 248
+ 196:	89 2b       	or	r24, r25
+			.port = led ->port_name ,
+			.direction = GPIO_PIN_OUTPUT ,
+			.pin = led->pin ,
+ 198:	92 2f       	mov	r25, r18
+ 19a:	96 95       	lsr	r25
+ 19c:	96 95       	lsr	r25
+ 19e:	96 95       	lsr	r25
+	{
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+ 1a0:	97 70       	andi	r25, 0x07	; 7
+ 1a2:	99 0f       	add	r25, r25
+ 1a4:	99 0f       	add	r25, r25
+ 1a6:	99 0f       	add	r25, r25
+ 1a8:	87 7c       	andi	r24, 0xC7	; 199
+ 1aa:	89 2b       	or	r24, r25
+			.port = led ->port_name ,
+			.direction = GPIO_PIN_OUTPUT ,
+			.pin = led->pin ,
+			.logic = led->led_status
+ 1ac:	26 fb       	bst	r18, 6
+ 1ae:	22 27       	eor	r18, r18
+ 1b0:	20 f9       	bld	r18, 0
+	{
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+ 1b2:	80 64       	ori	r24, 0x40	; 64
+ 1b4:	20 fb       	bst	r18, 0
+ 1b6:	87 f9       	bld	r24, 7
+ 1b8:	89 83       	std	Y+1, r24	; 0x01
+			.direction = GPIO_PIN_OUTPUT ,
+			.pin = led->pin ,
+			.logic = led->led_status
+		} ;
+		
+		ret =  gpio_pin_intialize(&pin_obj) ;
+ 1ba:	ce 01       	movw	r24, r28
+ 1bc:	01 96       	adiw	r24, 0x01	; 1
+ 1be:	0e 94 4e 03 	call	0x69c	; 0x69c <gpio_pin_intialize>
+ 1c2:	01 c0       	rjmp	.+2      	; 0x1c6 <ecu_led_initialize+0x4a>
+std_ReturnType ecu_led_initialize (const led_t *led)
+{
+	uint8 ret = E_OK ;
+	if (NULL == led )
+	{
+		ret = E_NOT_OK ;
+ 1c4:	80 e0       	ldi	r24, 0x00	; 0
+		} ;
+		
+		ret =  gpio_pin_intialize(&pin_obj) ;
+	}
+	return ret ;
+}
+ 1c6:	0f 90       	pop	r0
+ 1c8:	df 91       	pop	r29
+ 1ca:	cf 91       	pop	r28
+ 1cc:	08 95       	ret
+
+000001ce <ecu_led_off>:
+std_ReturnType ecu_led_off (const led_t *led)
+{
+ 1ce:	cf 93       	push	r28
+ 1d0:	df 93       	push	r29
+ 1d2:	1f 92       	push	r1
+ 1d4:	cd b7       	in	r28, 0x3d	; 61
+ 1d6:	de b7       	in	r29, 0x3e	; 62
+	uint8 ret = E_OK ;
+	if (NULL == led )
+ 1d8:	00 97       	sbiw	r24, 0x00	; 0
+ 1da:	f1 f0       	breq	.+60     	; 0x218 <ecu_led_off+0x4a>
+ 1dc:	fc 01       	movw	r30, r24
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+			.port = led ->port_name ,
+ 1de:	20 81       	ld	r18, Z
+ 1e0:	92 2f       	mov	r25, r18
+ 1e2:	97 70       	andi	r25, 0x07	; 7
+	{
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+ 1e4:	89 81       	ldd	r24, Y+1	; 0x01
+ 1e6:	88 7f       	andi	r24, 0xF8	; 248
+ 1e8:	89 2b       	or	r24, r25
+			.port = led ->port_name ,
+			.direction = GPIO_PIN_OUTPUT ,
+			.pin = led->pin ,
+ 1ea:	92 2f       	mov	r25, r18
+ 1ec:	96 95       	lsr	r25
+ 1ee:	96 95       	lsr	r25
+ 1f0:	96 95       	lsr	r25
+	{
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+ 1f2:	97 70       	andi	r25, 0x07	; 7
+ 1f4:	99 0f       	add	r25, r25
+ 1f6:	99 0f       	add	r25, r25
+ 1f8:	99 0f       	add	r25, r25
+ 1fa:	87 7c       	andi	r24, 0xC7	; 199
+ 1fc:	89 2b       	or	r24, r25
+			.port = led ->port_name ,
+			.direction = GPIO_PIN_OUTPUT ,
+			.pin = led->pin ,
+			.logic = led->led_status
+ 1fe:	26 fb       	bst	r18, 6
+ 200:	22 27       	eor	r18, r18
+ 202:	20 f9       	bld	r18, 0
+	{
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+ 204:	80 64       	ori	r24, 0x40	; 64
+ 206:	20 fb       	bst	r18, 0
+ 208:	87 f9       	bld	r24, 7
+ 20a:	89 83       	std	Y+1, r24	; 0x01
+			.port = led ->port_name ,
+			.direction = GPIO_PIN_OUTPUT ,
+			.pin = led->pin ,
+			.logic = led->led_status
+		} ;
+		ret  = gpio_pin_write_logic (&pin_obj , LOW );
+ 20c:	60 e0       	ldi	r22, 0x00	; 0
+ 20e:	ce 01       	movw	r24, r28
+ 210:	01 96       	adiw	r24, 0x01	; 1
+ 212:	0e 94 05 03 	call	0x60a	; 0x60a <gpio_pin_write_logic>
+ 216:	01 c0       	rjmp	.+2      	; 0x21a <ecu_led_off+0x4c>
+std_ReturnType ecu_led_off (const led_t *led)
+{
+	uint8 ret = E_OK ;
+	if (NULL == led )
+	{
+		ret = E_NOT_OK ;
+ 218:	80 e0       	ldi	r24, 0x00	; 0
+		} ;
+		ret  = gpio_pin_write_logic (&pin_obj , LOW );
+		
+	}
+	return ret  ;
+}
+ 21a:	0f 90       	pop	r0
+ 21c:	df 91       	pop	r29
+ 21e:	cf 91       	pop	r28
+ 220:	08 95       	ret
+
+00000222 <ecu_led_on>:
+std_ReturnType ecu_led_on (const led_t *led )
+{
+ 222:	cf 93       	push	r28
+ 224:	df 93       	push	r29
+ 226:	1f 92       	push	r1
+ 228:	cd b7       	in	r28, 0x3d	; 61
+ 22a:	de b7       	in	r29, 0x3e	; 62
+	uint8 ret = E_OK ;
+	if (NULL == led )
+ 22c:	00 97       	sbiw	r24, 0x00	; 0
+ 22e:	f1 f0       	breq	.+60     	; 0x26c <ecu_led_on+0x4a>
+ 230:	fc 01       	movw	r30, r24
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+			.port = led ->port_name ,
+ 232:	20 81       	ld	r18, Z
+ 234:	92 2f       	mov	r25, r18
+ 236:	97 70       	andi	r25, 0x07	; 7
+	{
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+ 238:	89 81       	ldd	r24, Y+1	; 0x01
+ 23a:	88 7f       	andi	r24, 0xF8	; 248
+ 23c:	89 2b       	or	r24, r25
+			.port = led ->port_name ,
+			.direction = GPIO_PIN_OUTPUT ,
+			.pin = led->pin ,
+ 23e:	92 2f       	mov	r25, r18
+ 240:	96 95       	lsr	r25
+ 242:	96 95       	lsr	r25
+ 244:	96 95       	lsr	r25
+	{
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+ 246:	97 70       	andi	r25, 0x07	; 7
+ 248:	99 0f       	add	r25, r25
+ 24a:	99 0f       	add	r25, r25
+ 24c:	99 0f       	add	r25, r25
+ 24e:	87 7c       	andi	r24, 0xC7	; 199
+ 250:	89 2b       	or	r24, r25
+			.port = led ->port_name ,
+			.direction = GPIO_PIN_OUTPUT ,
+			.pin = led->pin ,
+			.logic = led->led_status
+ 252:	26 fb       	bst	r18, 6
+ 254:	22 27       	eor	r18, r18
+ 256:	20 f9       	bld	r18, 0
+	{
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+ 258:	80 64       	ori	r24, 0x40	; 64
+ 25a:	20 fb       	bst	r18, 0
+ 25c:	87 f9       	bld	r24, 7
+ 25e:	89 83       	std	Y+1, r24	; 0x01
+			.port = led ->port_name ,
+			.direction = GPIO_PIN_OUTPUT ,
+			.pin = led->pin ,
+			.logic = led->led_status
+		} ;
+		ret  = gpio_pin_write_logic (&pin_obj , HIGH );
+ 260:	61 e0       	ldi	r22, 0x01	; 1
+ 262:	ce 01       	movw	r24, r28
+ 264:	01 96       	adiw	r24, 0x01	; 1
+ 266:	0e 94 05 03 	call	0x60a	; 0x60a <gpio_pin_write_logic>
+ 26a:	01 c0       	rjmp	.+2      	; 0x26e <ecu_led_on+0x4c>
+std_ReturnType ecu_led_on (const led_t *led )
+{
+	uint8 ret = E_OK ;
+	if (NULL == led )
+	{
+		ret = E_NOT_OK ;
+ 26c:	80 e0       	ldi	r24, 0x00	; 0
+		} ;
+		ret  = gpio_pin_write_logic (&pin_obj , HIGH );
+	}
+	return ret  ;
+	
+}
+ 26e:	0f 90       	pop	r0
+ 270:	df 91       	pop	r29
+ 272:	cf 91       	pop	r28
+ 274:	08 95       	ret
+
+00000276 <ecu_led_toggle>:
+std_ReturnType ecu_led_toggle (const led_t *led )
+{
+ 276:	cf 93       	push	r28
+ 278:	df 93       	push	r29
+ 27a:	1f 92       	push	r1
+ 27c:	cd b7       	in	r28, 0x3d	; 61
+ 27e:	de b7       	in	r29, 0x3e	; 62
+	uint8 ret = E_OK ;
+	if (NULL == led )
+ 280:	00 97       	sbiw	r24, 0x00	; 0
+ 282:	e9 f0       	breq	.+58     	; 0x2be <ecu_led_toggle+0x48>
+ 284:	fc 01       	movw	r30, r24
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+			.port = led ->port_name ,
+ 286:	20 81       	ld	r18, Z
+ 288:	92 2f       	mov	r25, r18
+ 28a:	97 70       	andi	r25, 0x07	; 7
+	{
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+ 28c:	89 81       	ldd	r24, Y+1	; 0x01
+ 28e:	88 7f       	andi	r24, 0xF8	; 248
+ 290:	89 2b       	or	r24, r25
+			.port = led ->port_name ,
+			.direction = GPIO_PIN_OUTPUT ,
+			.pin = led->pin ,
+ 292:	92 2f       	mov	r25, r18
+ 294:	96 95       	lsr	r25
+ 296:	96 95       	lsr	r25
+ 298:	96 95       	lsr	r25
+	{
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+ 29a:	97 70       	andi	r25, 0x07	; 7
+ 29c:	99 0f       	add	r25, r25
+ 29e:	99 0f       	add	r25, r25
+ 2a0:	99 0f       	add	r25, r25
+ 2a2:	87 7c       	andi	r24, 0xC7	; 199
+ 2a4:	89 2b       	or	r24, r25
+			.port = led ->port_name ,
+			.direction = GPIO_PIN_OUTPUT ,
+			.pin = led->pin ,
+			.logic = led->led_status
+ 2a6:	26 fb       	bst	r18, 6
+ 2a8:	22 27       	eor	r18, r18
+ 2aa:	20 f9       	bld	r18, 0
+	{
+		ret = E_NOT_OK ;
+	}
+	else
+	{
+		pin_config_t pin_obj  = {
+ 2ac:	80 64       	ori	r24, 0x40	; 64
+ 2ae:	20 fb       	bst	r18, 0
+ 2b0:	87 f9       	bld	r24, 7
+ 2b2:	89 83       	std	Y+1, r24	; 0x01
+			.port = led ->port_name ,
+			.direction = GPIO_PIN_OUTPUT ,
+			.pin = led->pin ,
+			.logic = led->led_status
+		} ;
+		ret = gpio_pin_toggle_logic(&pin_obj) ;
+ 2b4:	ce 01       	movw	r24, r28
+ 2b6:	01 96       	adiw	r24, 0x01	; 1
+ 2b8:	0e 94 88 03 	call	0x710	; 0x710 <gpio_pin_toggle_logic>
+ 2bc:	01 c0       	rjmp	.+2      	; 0x2c0 <ecu_led_toggle+0x4a>
+std_ReturnType ecu_led_toggle (const led_t *led )
+{
+	uint8 ret = E_OK ;
+	if (NULL == led )
+	{
+		ret = E_NOT_OK ;
+ 2be:	80 e0       	ldi	r24, 0x00	; 0
+			.logic = led->led_status
+		} ;
+		ret = gpio_pin_toggle_logic(&pin_obj) ;
+	}
+	return ret  ;
+ 2c0:	0f 90       	pop	r0
+ 2c2:	df 91       	pop	r29
+ 2c4:	cf 91       	pop	r28
+ 2c6:	08 95       	ret
+
+000002c8 <ecu_dc_motor_intialize>:
+			ret = gpio_pin_write_logic(&pin_obj_2,HIGH)  ; 
+	}
+		
+	
+	return ret ;
+}
+ 2c8:	cf 93       	push	r28
+ 2ca:	df 93       	push	r29
+ 2cc:	00 d0       	rcall	.+0      	; 0x2ce <ecu_dc_motor_intialize+0x6>
+ 2ce:	cd b7       	in	r28, 0x3d	; 61
+ 2d0:	de b7       	in	r29, 0x3e	; 62
+ 2d2:	00 97       	sbiw	r24, 0x00	; 0
+ 2d4:	91 f1       	breq	.+100    	; 0x33a <ecu_dc_motor_intialize+0x72>
+ 2d6:	fc 01       	movw	r30, r24
+ 2d8:	20 81       	ld	r18, Z
+ 2da:	82 2f       	mov	r24, r18
+ 2dc:	87 70       	andi	r24, 0x07	; 7
+ 2de:	9a 81       	ldd	r25, Y+2	; 0x02
+ 2e0:	98 7f       	andi	r25, 0xF8	; 248
+ 2e2:	98 2b       	or	r25, r24
+ 2e4:	26 95       	lsr	r18
+ 2e6:	26 95       	lsr	r18
+ 2e8:	26 95       	lsr	r18
+ 2ea:	27 70       	andi	r18, 0x07	; 7
+ 2ec:	22 0f       	add	r18, r18
+ 2ee:	22 0f       	add	r18, r18
+ 2f0:	22 0f       	add	r18, r18
+ 2f2:	97 7c       	andi	r25, 0xC7	; 199
+ 2f4:	92 2b       	or	r25, r18
+ 2f6:	90 64       	ori	r25, 0x40	; 64
+ 2f8:	9f 77       	andi	r25, 0x7F	; 127
+ 2fa:	9a 83       	std	Y+2, r25	; 0x02
+ 2fc:	21 81       	ldd	r18, Z+1	; 0x01
+ 2fe:	82 2f       	mov	r24, r18
+ 300:	87 70       	andi	r24, 0x07	; 7
+ 302:	99 81       	ldd	r25, Y+1	; 0x01
+ 304:	98 7f       	andi	r25, 0xF8	; 248
+ 306:	98 2b       	or	r25, r24
+ 308:	26 95       	lsr	r18
+ 30a:	26 95       	lsr	r18
+ 30c:	26 95       	lsr	r18
+ 30e:	27 70       	andi	r18, 0x07	; 7
+ 310:	22 0f       	add	r18, r18
+ 312:	22 0f       	add	r18, r18
+ 314:	22 0f       	add	r18, r18
+ 316:	97 7c       	andi	r25, 0xC7	; 199
+ 318:	92 2b       	or	r25, r18
+ 31a:	90 64       	ori	r25, 0x40	; 64
+ 31c:	9f 77       	andi	r25, 0x7F	; 127
+ 31e:	99 83       	std	Y+1, r25	; 0x01
+ 320:	cf 01       	movw	r24, r30
+ 322:	02 96       	adiw	r24, 0x02	; 2
+ 324:	0e 94 4e 03 	call	0x69c	; 0x69c <gpio_pin_intialize>
+ 328:	ce 01       	movw	r24, r28
+ 32a:	02 96       	adiw	r24, 0x02	; 2
+ 32c:	0e 94 4e 03 	call	0x69c	; 0x69c <gpio_pin_intialize>
+ 330:	ce 01       	movw	r24, r28
+ 332:	01 96       	adiw	r24, 0x01	; 1
+ 334:	0e 94 4e 03 	call	0x69c	; 0x69c <gpio_pin_intialize>
+ 338:	01 c0       	rjmp	.+2      	; 0x33c <ecu_dc_motor_intialize+0x74>
+ 33a:	80 e0       	ldi	r24, 0x00	; 0
+ 33c:	0f 90       	pop	r0
+ 33e:	0f 90       	pop	r0
+ 340:	df 91       	pop	r29
+ 342:	cf 91       	pop	r28
+ 344:	08 95       	ret
+
+00000346 <ecu_dc_motor_move_right>:
+std_ReturnType ecu_dc_motor_move_right (const dc_motor_t *dc_motor_ ) 
+{
+ 346:	cf 93       	push	r28
+ 348:	df 93       	push	r29
+ 34a:	00 d0       	rcall	.+0      	; 0x34c <ecu_dc_motor_move_right+0x6>
+ 34c:	cd b7       	in	r28, 0x3d	; 61
+ 34e:	de b7       	in	r29, 0x3e	; 62
+	std_ReturnType ret = E_OK ;
+	if (NULL == dc_motor_ )
+ 350:	00 97       	sbiw	r24, 0x00	; 0
+ 352:	a9 f1       	breq	.+106    	; 0x3be <ecu_dc_motor_move_right+0x78>
+ 354:	fc 01       	movw	r30, r24
+		{
+		/*
+		Pin Object Motor have 2 pins according to spin direction 
+	    */
+				pin_config_t pin_obj_1 = {
+					.port = dc_motor_->dc_motor[0].port ,
+ 356:	20 81       	ld	r18, Z
+ 358:	82 2f       	mov	r24, r18
+ 35a:	87 70       	andi	r24, 0x07	; 7
+		else 
+		{
+		/*
+		Pin Object Motor have 2 pins according to spin direction 
+	    */
+				pin_config_t pin_obj_1 = {
+ 35c:	9a 81       	ldd	r25, Y+2	; 0x02
+ 35e:	98 7f       	andi	r25, 0xF8	; 248
+ 360:	98 2b       	or	r25, r24
+					.port = dc_motor_->dc_motor[0].port ,
+					.pin  = dc_motor_->dc_motor[0].pin  ,
+ 362:	26 95       	lsr	r18
+ 364:	26 95       	lsr	r18
+ 366:	26 95       	lsr	r18
+		else 
+		{
+		/*
+		Pin Object Motor have 2 pins according to spin direction 
+	    */
+				pin_config_t pin_obj_1 = {
+ 368:	27 70       	andi	r18, 0x07	; 7
+ 36a:	22 0f       	add	r18, r18
+ 36c:	22 0f       	add	r18, r18
+ 36e:	22 0f       	add	r18, r18
+ 370:	97 7c       	andi	r25, 0xC7	; 199
+ 372:	92 2b       	or	r25, r18
+ 374:	90 64       	ori	r25, 0x40	; 64
+ 376:	9f 77       	andi	r25, 0x7F	; 127
+ 378:	9a 83       	std	Y+2, r25	; 0x02
+					.direction = GPIO_PIN_OUTPUT         ,
+					.logic = LOW
+				    };
+				
+				pin_config_t pin_obj_2 = {
+					.port = dc_motor_->dc_motor[1].port ,
+ 37a:	21 81       	ldd	r18, Z+1	; 0x01
+ 37c:	82 2f       	mov	r24, r18
+ 37e:	87 70       	andi	r24, 0x07	; 7
+					.pin  = dc_motor_->dc_motor[0].pin  ,
+					.direction = GPIO_PIN_OUTPUT         ,
+					.logic = LOW
+				    };
+				
+				pin_config_t pin_obj_2 = {
+ 380:	99 81       	ldd	r25, Y+1	; 0x01
+ 382:	98 7f       	andi	r25, 0xF8	; 248
+ 384:	98 2b       	or	r25, r24
+					.port = dc_motor_->dc_motor[1].port ,
+					.pin  = dc_motor_->dc_motor[1].pin  ,
+ 386:	26 95       	lsr	r18
+ 388:	26 95       	lsr	r18
+ 38a:	26 95       	lsr	r18
+					.pin  = dc_motor_->dc_motor[0].pin  ,
+					.direction = GPIO_PIN_OUTPUT         ,
+					.logic = LOW
+				    };
+				
+				pin_config_t pin_obj_2 = {
+ 38c:	27 70       	andi	r18, 0x07	; 7
+ 38e:	22 0f       	add	r18, r18
+ 390:	22 0f       	add	r18, r18
+ 392:	22 0f       	add	r18, r18
+ 394:	97 7c       	andi	r25, 0xC7	; 199
+ 396:	92 2b       	or	r25, r18
+ 398:	90 64       	ori	r25, 0x40	; 64
+ 39a:	9f 77       	andi	r25, 0x7F	; 127
+ 39c:	99 83       	std	Y+1, r25	; 0x01
+					.port = dc_motor_->dc_motor[1].port ,
+					.pin  = dc_motor_->dc_motor[1].pin  ,
+					.direction = GPIO_PIN_OUTPUT         ,
+					.logic = LOW
+				    };
+			ret = gpio_pin_write_logic(&(dc_motor_->enable_pin),HIGH);
+ 39e:	61 e0       	ldi	r22, 0x01	; 1
+ 3a0:	cf 01       	movw	r24, r30
+ 3a2:	02 96       	adiw	r24, 0x02	; 2
+ 3a4:	0e 94 05 03 	call	0x60a	; 0x60a <gpio_pin_write_logic>
+			ret = gpio_pin_write_logic(&pin_obj_1,HIGH) ; 
+ 3a8:	61 e0       	ldi	r22, 0x01	; 1
+ 3aa:	ce 01       	movw	r24, r28
+ 3ac:	02 96       	adiw	r24, 0x02	; 2
+ 3ae:	0e 94 05 03 	call	0x60a	; 0x60a <gpio_pin_write_logic>
+			ret = gpio_pin_write_logic(&pin_obj_2,LOW)  ; 
+ 3b2:	60 e0       	ldi	r22, 0x00	; 0
+ 3b4:	ce 01       	movw	r24, r28
+ 3b6:	01 96       	adiw	r24, 0x01	; 1
+ 3b8:	0e 94 05 03 	call	0x60a	; 0x60a <gpio_pin_write_logic>
+ 3bc:	01 c0       	rjmp	.+2      	; 0x3c0 <ecu_dc_motor_move_right+0x7a>
+std_ReturnType ecu_dc_motor_move_right (const dc_motor_t *dc_motor_ ) 
+{
+	std_ReturnType ret = E_OK ;
+	if (NULL == dc_motor_ )
+	{
+		ret = E_NOT_OK ;
+ 3be:	80 e0       	ldi	r24, 0x00	; 0
+			ret = gpio_pin_write_logic(&pin_obj_1,HIGH) ; 
+			ret = gpio_pin_write_logic(&pin_obj_2,LOW)  ; 
+	    }
+	
+	return ret ;
+}
+ 3c0:	0f 90       	pop	r0
+ 3c2:	0f 90       	pop	r0
+ 3c4:	df 91       	pop	r29
+ 3c6:	cf 91       	pop	r28
+ 3c8:	08 95       	ret
+
+000003ca <ecu_dc_motor_stop>:
+std_ReturnType ecu_dc_motor_stop  (const dc_motor_t *dc_motor_ ) 
+{
+ 3ca:	cf 93       	push	r28
+ 3cc:	df 93       	push	r29
+ 3ce:	00 d0       	rcall	.+0      	; 0x3d0 <ecu_dc_motor_stop+0x6>
+ 3d0:	cd b7       	in	r28, 0x3d	; 61
+ 3d2:	de b7       	in	r29, 0x3e	; 62
+	std_ReturnType ret = E_OK ;
+	if (NULL == dc_motor_ )
+ 3d4:	00 97       	sbiw	r24, 0x00	; 0
+ 3d6:	a9 f1       	breq	.+106    	; 0x442 <__EEPROM_REGION_LENGTH__+0x42>
+ 3d8:	fc 01       	movw	r30, r24
+		
+		/*
+		Pin Object Motor have 2 pins according to spin direction 
+	    */
+				pin_config_t pin_obj_1 = {
+					.port = dc_motor_->dc_motor[0].port ,
+ 3da:	20 81       	ld	r18, Z
+ 3dc:	82 2f       	mov	r24, r18
+ 3de:	87 70       	andi	r24, 0x07	; 7
+	else {
+		
+		/*
+		Pin Object Motor have 2 pins according to spin direction 
+	    */
+				pin_config_t pin_obj_1 = {
+ 3e0:	9a 81       	ldd	r25, Y+2	; 0x02
+ 3e2:	98 7f       	andi	r25, 0xF8	; 248
+ 3e4:	98 2b       	or	r25, r24
+					.port = dc_motor_->dc_motor[0].port ,
+					.pin  = dc_motor_->dc_motor[0].pin  ,
+ 3e6:	26 95       	lsr	r18
+ 3e8:	26 95       	lsr	r18
+ 3ea:	26 95       	lsr	r18
+	else {
+		
+		/*
+		Pin Object Motor have 2 pins according to spin direction 
+	    */
+				pin_config_t pin_obj_1 = {
+ 3ec:	27 70       	andi	r18, 0x07	; 7
+ 3ee:	22 0f       	add	r18, r18
+ 3f0:	22 0f       	add	r18, r18
+ 3f2:	22 0f       	add	r18, r18
+ 3f4:	97 7c       	andi	r25, 0xC7	; 199
+ 3f6:	92 2b       	or	r25, r18
+ 3f8:	90 64       	ori	r25, 0x40	; 64
+ 3fa:	9f 77       	andi	r25, 0x7F	; 127
+ 3fc:	9a 83       	std	Y+2, r25	; 0x02
+					.direction = GPIO_PIN_OUTPUT         ,
+					.logic = LOW
+				};
+				
+				pin_config_t pin_obj_2 = {
+					.port = dc_motor_->dc_motor[1].port ,
+ 3fe:	21 81       	ldd	r18, Z+1	; 0x01
+ 400:	82 2f       	mov	r24, r18
+ 402:	87 70       	andi	r24, 0x07	; 7
+					.pin  = dc_motor_->dc_motor[0].pin  ,
+					.direction = GPIO_PIN_OUTPUT         ,
+					.logic = LOW
+				};
+				
+				pin_config_t pin_obj_2 = {
+ 404:	99 81       	ldd	r25, Y+1	; 0x01
+ 406:	98 7f       	andi	r25, 0xF8	; 248
+ 408:	98 2b       	or	r25, r24
+					.port = dc_motor_->dc_motor[1].port ,
+					.pin  = dc_motor_->dc_motor[1].pin  ,
+ 40a:	26 95       	lsr	r18
+ 40c:	26 95       	lsr	r18
+ 40e:	26 95       	lsr	r18
+					.pin  = dc_motor_->dc_motor[0].pin  ,
+					.direction = GPIO_PIN_OUTPUT         ,
+					.logic = LOW
+				};
+				
+				pin_config_t pin_obj_2 = {
+ 410:	27 70       	andi	r18, 0x07	; 7
+ 412:	22 0f       	add	r18, r18
+ 414:	22 0f       	add	r18, r18
+ 416:	22 0f       	add	r18, r18
+ 418:	97 7c       	andi	r25, 0xC7	; 199
+ 41a:	92 2b       	or	r25, r18
+ 41c:	90 64       	ori	r25, 0x40	; 64
+ 41e:	9f 77       	andi	r25, 0x7F	; 127
+ 420:	99 83       	std	Y+1, r25	; 0x01
+					.port = dc_motor_->dc_motor[1].port ,
+					.pin  = dc_motor_->dc_motor[1].pin  ,
+					.direction = GPIO_PIN_OUTPUT         ,
+					.logic = LOW
+				};
+			ret = gpio_pin_write_logic(&(dc_motor_->enable_pin),HIGH);
+ 422:	61 e0       	ldi	r22, 0x01	; 1
+ 424:	cf 01       	movw	r24, r30
+ 426:	02 96       	adiw	r24, 0x02	; 2
+ 428:	0e 94 05 03 	call	0x60a	; 0x60a <gpio_pin_write_logic>
+			ret = gpio_pin_write_logic(&pin_obj_1,LOW) ; 
+ 42c:	60 e0       	ldi	r22, 0x00	; 0
+ 42e:	ce 01       	movw	r24, r28
+ 430:	02 96       	adiw	r24, 0x02	; 2
+ 432:	0e 94 05 03 	call	0x60a	; 0x60a <gpio_pin_write_logic>
+			ret = gpio_pin_write_logic(&pin_obj_2,LOW)  ; 
+ 436:	60 e0       	ldi	r22, 0x00	; 0
+ 438:	ce 01       	movw	r24, r28
+ 43a:	01 96       	adiw	r24, 0x01	; 1
+ 43c:	0e 94 05 03 	call	0x60a	; 0x60a <gpio_pin_write_logic>
+ 440:	01 c0       	rjmp	.+2      	; 0x444 <__EEPROM_REGION_LENGTH__+0x44>
+std_ReturnType ecu_dc_motor_stop  (const dc_motor_t *dc_motor_ ) 
+{
+	std_ReturnType ret = E_OK ;
+	if (NULL == dc_motor_ )
+	{
+		ret = E_NOT_OK ;
+ 442:	80 e0       	ldi	r24, 0x00	; 0
+			ret = gpio_pin_write_logic(&pin_obj_1,LOW) ; 
+			ret = gpio_pin_write_logic(&pin_obj_2,LOW)  ; 
+	}
+	
+	return ret ;
+}
+ 444:	0f 90       	pop	r0
+ 446:	0f 90       	pop	r0
+ 448:	df 91       	pop	r29
+ 44a:	cf 91       	pop	r28
+ 44c:	08 95       	ret
+
+0000044e <main>:
+
+uint8 numbers_com_anode [10] = {0xC0 , 0xF9 , 0xA4 , 0xB0,0x99 , 0x92,0x82,0xF8,0x80 , 0x90} ;
+
+
+int main(void)
+{
+ 44e:	cf 93       	push	r28
+ 450:	df 93       	push	r29
+ 452:	cd b7       	in	r28, 0x3d	; 61
+ 454:	de b7       	in	r29, 0x3e	; 62
+ 456:	2a 97       	sbiw	r28, 0x0a	; 10
+ 458:	0f b6       	in	r0, 0x3f	; 63
+ 45a:	f8 94       	cli
+ 45c:	de bf       	out	0x3e, r29	; 62
+ 45e:	0f be       	out	0x3f, r0	; 63
+ 460:	cd bf       	out	0x3d, r28	; 61
+	
+	/*Initialization Section */
+	
+	port_config_t port1 = {
+ 462:	89 81       	ldd	r24, Y+1	; 0x01
+ 464:	88 7f       	andi	r24, 0xF8	; 248
+ 466:	88 60       	ori	r24, 0x08	; 8
+ 468:	89 83       	std	Y+1, r24	; 0x01
+ 46a:	1a 82       	std	Y+2, r1	; 0x02
+		.port=PORTA_INDEX ,
+		.direction = GPIO_PORT_OUTPUT  , 
+		.logic = LOW  		
+	} ; 
+	
+	led_t led2 = {.port_name = PORTC_INDEX,
+ 46c:	8a e0       	ldi	r24, 0x0A	; 10
+ 46e:	8b 83       	std	Y+3, r24	; 0x03
+		.led_status = LOW ,
+		.pin = PIN1};
+		
+	pin_config_t new_pin = {
+ 470:	8c 81       	ldd	r24, Y+4	; 0x04
+ 472:	80 7c       	andi	r24, 0xC0	; 192
+ 474:	80 64       	ori	r24, 0x40	; 64
+ 476:	8f 77       	andi	r24, 0x7F	; 127
+ 478:	8c 83       	std	Y+4, r24	; 0x04
+		.port = PORTA_INDEX ,
+		.pin = PIN0 ,
+		.logic = LOW
+		};
+		
+dc_motor_t motor1 = {
+ 47a:	1d 82       	std	Y+5, r1	; 0x05
+ 47c:	1e 82       	std	Y+6, r1	; 0x06
+ 47e:	1f 82       	std	Y+7, r1	; 0x07
+ 480:	83 e0       	ldi	r24, 0x03	; 3
+ 482:	8d 83       	std	Y+5, r24	; 0x05
+ 484:	8e 81       	ldd	r24, Y+6	; 0x06
+ 486:	88 7f       	andi	r24, 0xF8	; 248
+ 488:	83 60       	ori	r24, 0x03	; 3
+ 48a:	87 7c       	andi	r24, 0xC7	; 199
+ 48c:	88 60       	ori	r24, 0x08	; 8
+ 48e:	8e 83       	std	Y+6, r24	; 0x06
+ 490:	8f 81       	ldd	r24, Y+7	; 0x07
+ 492:	88 7f       	andi	r24, 0xF8	; 248
+ 494:	83 60       	ori	r24, 0x03	; 3
+ 496:	87 7c       	andi	r24, 0xC7	; 199
+ 498:	80 62       	ori	r24, 0x20	; 32
+ 49a:	80 64       	ori	r24, 0x40	; 64
+ 49c:	8f 83       	std	Y+7, r24	; 0x07
+	.enable_pin.pin   = PIN4 ,
+	.enable_pin.logic = LOW ,
+	};
+	
+	
+	led_t led1 = {
+ 49e:	82 e0       	ldi	r24, 0x02	; 2
+ 4a0:	88 87       	std	Y+8, r24	; 0x08
+	.port_name = PORTC_INDEX,
+	.led_status = LOW ,
+	.pin = PIN0 
+	};
+	
+	button_t button1 = {
+ 4a2:	81 e4       	ldi	r24, 0x41	; 65
+ 4a4:	89 87       	std	Y+9, r24	; 0x09
+		.port_name = PORTB_INDEX ,
+		.pin=PIN0 , 
+		.button_state = BUTTON_ACTIVE_HIGH 
+	};
+	uint8 ret = gpio_pin_intialize(&new_pin) ; 
+ 4a6:	ce 01       	movw	r24, r28
+ 4a8:	04 96       	adiw	r24, 0x04	; 4
+ 4aa:	0e 94 4e 03 	call	0x69c	; 0x69c <gpio_pin_intialize>
+	ecu_dc_motor_intialize(&motor1) ; 
+ 4ae:	ce 01       	movw	r24, r28
+ 4b0:	05 96       	adiw	r24, 0x05	; 5
+ 4b2:	0e 94 64 01 	call	0x2c8	; 0x2c8 <ecu_dc_motor_intialize>
+	ecu_led_initialize(&led1) ; 
+ 4b6:	ce 01       	movw	r24, r28
+ 4b8:	08 96       	adiw	r24, 0x08	; 8
+ 4ba:	0e 94 be 00 	call	0x17c	; 0x17c <ecu_led_initialize>
+	ecu_led_initialize(&led2) ; 
+ 4be:	ce 01       	movw	r24, r28
+ 4c0:	03 96       	adiw	r24, 0x03	; 3
+ 4c2:	0e 94 be 00 	call	0x17c	; 0x17c <ecu_led_initialize>
+	ecu_button_intialize(&button1);
+ 4c6:	ce 01       	movw	r24, r28
+ 4c8:	09 96       	adiw	r24, 0x09	; 9
+ 4ca:	0e 94 41 00 	call	0x82	; 0x82 <ecu_button_intialize>
+	 gpio_port_direction_initialize(&port1) ; 
+ 4ce:	ce 01       	movw	r24, r28
+ 4d0:	01 96       	adiw	r24, 0x01	; 1
+ 4d2:	0e 94 aa 03 	call	0x754	; 0x754 <gpio_port_direction_initialize>
+	ret =  gpio_port_write_logic(&port1 , 0xC0) ; 
+ 4d6:	60 ec       	ldi	r22, 0xC0	; 192
+ 4d8:	ce 01       	movw	r24, r28
+ 4da:	01 96       	adiw	r24, 0x01	; 1
+ 4dc:	0e 94 d7 03 	call	0x7ae	; 0x7ae <gpio_port_write_logic>
+    /* Replace with your application code */
+	//DDRA = 0xFF ; 
+	//PORTA = 0x00 ; 
+	
+	button_state_t button_1_state = BUTTON_UN_PRESSED ; 
+ 4e0:	91 e0       	ldi	r25, 0x01	; 1
+ 4e2:	9a 87       	std	Y+10, r25	; 0x0a
+	
+    if (ret == E_NOT_OK)
+ 4e4:	81 11       	cpse	r24, r1
+ 4e6:	04 c0       	rjmp	.+8      	; 0x4f0 <main+0xa2>
+	{
+		ecu_led_on(&led2) ; 
+ 4e8:	ce 01       	movw	r24, r28
+ 4ea:	03 96       	adiw	r24, 0x03	; 3
+ 4ec:	0e 94 11 01 	call	0x222	; 0x222 <ecu_led_on>
+
+uint8 numbers_com_anode [10] = {0xC0 , 0xF9 , 0xA4 , 0xB0,0x99 , 0x92,0x82,0xF8,0x80 , 0x90} ;
+
+
+int main(void)
+{
+ 4f0:	00 e0       	ldi	r16, 0x00	; 0
+ 4f2:	10 e0       	ldi	r17, 0x00	; 0
+ 4f4:	15 c0       	rjmp	.+42     	; 0x520 <main+0xd2>
+	{
+		ecu_led_on(&led2) ; 
+	}
+	for (int i = 0 ; i < 10 ; i ++ )
+	{
+		gpio_port_write_logic(&port1 , TOGGLE_NUM(numbers_com_anode[i])) ; 
+ 4f6:	f8 01       	movw	r30, r16
+ 4f8:	e0 5a       	subi	r30, 0xA0	; 160
+ 4fa:	ff 4f       	sbci	r31, 0xFF	; 255
+ 4fc:	60 81       	ld	r22, Z
+ 4fe:	60 95       	com	r22
+ 500:	60 83       	st	Z, r22
+ 502:	ce 01       	movw	r24, r28
+ 504:	01 96       	adiw	r24, 0x01	; 1
+ 506:	0e 94 d7 03 	call	0x7ae	; 0x7ae <gpio_port_write_logic>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 50a:	2f ef       	ldi	r18, 0xFF	; 255
+ 50c:	84 e3       	ldi	r24, 0x34	; 52
+ 50e:	9c e0       	ldi	r25, 0x0C	; 12
+ 510:	21 50       	subi	r18, 0x01	; 1
+ 512:	80 40       	sbci	r24, 0x00	; 0
+ 514:	90 40       	sbci	r25, 0x00	; 0
+ 516:	e1 f7       	brne	.-8      	; 0x510 <main+0xc2>
+ 518:	00 c0       	rjmp	.+0      	; 0x51a <main+0xcc>
+ 51a:	00 00       	nop
+	
+    if (ret == E_NOT_OK)
+	{
+		ecu_led_on(&led2) ; 
+	}
+	for (int i = 0 ; i < 10 ; i ++ )
+ 51c:	0f 5f       	subi	r16, 0xFF	; 255
+ 51e:	1f 4f       	sbci	r17, 0xFF	; 255
+ 520:	0a 30       	cpi	r16, 0x0A	; 10
+ 522:	11 05       	cpc	r17, r1
+ 524:	44 f3       	brlt	.-48     	; 0x4f6 <main+0xa8>
+		_delay_ms(500) ; 
+	}
+	
+	while (1) 
+    {
+	 	ecu_button_read_state(&button1 , &button_1_state) ; 
+ 526:	be 01       	movw	r22, r28
+ 528:	66 5f       	subi	r22, 0xF6	; 246
+ 52a:	7f 4f       	sbci	r23, 0xFF	; 255
+ 52c:	ce 01       	movw	r24, r28
+ 52e:	09 96       	adiw	r24, 0x09	; 9
+ 530:	0e 94 66 00 	call	0xcc	; 0xcc <ecu_button_read_state>
+		if (button_1_state == BUTTON_PRESSED)
+ 534:	8a 85       	ldd	r24, Y+10	; 0x0a
+ 536:	81 11       	cpse	r24, r1
+ 538:	12 c0       	rjmp	.+36     	; 0x55e <main+0x110>
+		{
+			ecu_dc_motor_move_right(&motor1) ; 
+ 53a:	ce 01       	movw	r24, r28
+ 53c:	05 96       	adiw	r24, 0x05	; 5
+ 53e:	0e 94 a3 01 	call	0x346	; 0x346 <ecu_dc_motor_move_right>
+				ecu_led_toggle(&led1) ;
+ 542:	ce 01       	movw	r24, r28
+ 544:	08 96       	adiw	r24, 0x08	; 8
+ 546:	0e 94 3b 01 	call	0x276	; 0x276 <ecu_led_toggle>
+ 54a:	2f ef       	ldi	r18, 0xFF	; 255
+ 54c:	80 e7       	ldi	r24, 0x70	; 112
+ 54e:	92 e0       	ldi	r25, 0x02	; 2
+ 550:	21 50       	subi	r18, 0x01	; 1
+ 552:	80 40       	sbci	r24, 0x00	; 0
+ 554:	90 40       	sbci	r25, 0x00	; 0
+ 556:	e1 f7       	brne	.-8      	; 0x550 <main+0x102>
+ 558:	00 c0       	rjmp	.+0      	; 0x55a <main+0x10c>
+ 55a:	00 00       	nop
+ 55c:	e4 cf       	rjmp	.-56     	; 0x526 <main+0xd8>
+				_delay_ms(100) ;
+				
+		}
+		
+		else { ecu_led_off(&led1) ; 
+ 55e:	ce 01       	movw	r24, r28
+ 560:	08 96       	adiw	r24, 0x08	; 8
+ 562:	0e 94 e7 00 	call	0x1ce	; 0x1ce <ecu_led_off>
+			 ecu_dc_motor_stop(&motor1);
+ 566:	ce 01       	movw	r24, r28
+ 568:	05 96       	adiw	r24, 0x05	; 5
+ 56a:	0e 94 e5 01 	call	0x3ca	; 0x3ca <ecu_dc_motor_stop>
+ 56e:	db cf       	rjmp	.-74     	; 0x526 <main+0xd8>
+
+00000570 <gpio_pin_direction_initialize>:
+{
+	uint8 ret = E_OK ;
+
+	
+	return ret ;
+}
+ 570:	00 97       	sbiw	r24, 0x00	; 0
+ 572:	09 f4       	brne	.+2      	; 0x576 <gpio_pin_direction_initialize+0x6>
+ 574:	42 c0       	rjmp	.+132    	; 0x5fa <gpio_pin_direction_initialize+0x8a>
+ 576:	fc 01       	movw	r30, r24
+ 578:	20 81       	ld	r18, Z
+ 57a:	27 70       	andi	r18, 0x07	; 7
+ 57c:	30 e0       	ldi	r19, 0x00	; 0
+ 57e:	24 30       	cpi	r18, 0x04	; 4
+ 580:	31 05       	cpc	r19, r1
+ 582:	ec f5       	brge	.+122    	; 0x5fe <gpio_pin_direction_initialize+0x8e>
+ 584:	40 81       	ld	r20, Z
+ 586:	46 95       	lsr	r20
+ 588:	46 95       	lsr	r20
+ 58a:	46 95       	lsr	r20
+ 58c:	47 70       	andi	r20, 0x07	; 7
+ 58e:	50 e0       	ldi	r21, 0x00	; 0
+ 590:	47 30       	cpi	r20, 0x07	; 7
+ 592:	51 05       	cpc	r21, r1
+ 594:	b4 f5       	brge	.+108    	; 0x602 <gpio_pin_direction_initialize+0x92>
+ 596:	80 81       	ld	r24, Z
+ 598:	86 fb       	bst	r24, 6
+ 59a:	99 27       	eor	r25, r25
+ 59c:	90 f9       	bld	r25, 0
+ 59e:	86 ff       	sbrs	r24, 6
+ 5a0:	03 c0       	rjmp	.+6      	; 0x5a8 <gpio_pin_direction_initialize+0x38>
+ 5a2:	91 30       	cpi	r25, 0x01	; 1
+ 5a4:	b1 f0       	breq	.+44     	; 0x5d2 <gpio_pin_direction_initialize+0x62>
+ 5a6:	2f c0       	rjmp	.+94     	; 0x606 <gpio_pin_direction_initialize+0x96>
+ 5a8:	22 0f       	add	r18, r18
+ 5aa:	33 1f       	adc	r19, r19
+ 5ac:	f9 01       	movw	r30, r18
+ 5ae:	e6 58       	subi	r30, 0x86	; 134
+ 5b0:	ff 4f       	sbci	r31, 0xFF	; 255
+ 5b2:	01 90       	ld	r0, Z+
+ 5b4:	f0 81       	ld	r31, Z
+ 5b6:	e0 2d       	mov	r30, r0
+ 5b8:	20 81       	ld	r18, Z
+ 5ba:	81 e0       	ldi	r24, 0x01	; 1
+ 5bc:	90 e0       	ldi	r25, 0x00	; 0
+ 5be:	02 c0       	rjmp	.+4      	; 0x5c4 <gpio_pin_direction_initialize+0x54>
+ 5c0:	88 0f       	add	r24, r24
+ 5c2:	99 1f       	adc	r25, r25
+ 5c4:	4a 95       	dec	r20
+ 5c6:	e2 f7       	brpl	.-8      	; 0x5c0 <gpio_pin_direction_initialize+0x50>
+ 5c8:	80 95       	com	r24
+ 5ca:	82 23       	and	r24, r18
+ 5cc:	80 83       	st	Z, r24
+ 5ce:	81 e0       	ldi	r24, 0x01	; 1
+ 5d0:	08 95       	ret
+ 5d2:	22 0f       	add	r18, r18
+ 5d4:	33 1f       	adc	r19, r19
+ 5d6:	f9 01       	movw	r30, r18
+ 5d8:	e6 58       	subi	r30, 0x86	; 134
+ 5da:	ff 4f       	sbci	r31, 0xFF	; 255
+ 5dc:	01 90       	ld	r0, Z+
+ 5de:	f0 81       	ld	r31, Z
+ 5e0:	e0 2d       	mov	r30, r0
+ 5e2:	20 81       	ld	r18, Z
+ 5e4:	81 e0       	ldi	r24, 0x01	; 1
+ 5e6:	90 e0       	ldi	r25, 0x00	; 0
+ 5e8:	02 c0       	rjmp	.+4      	; 0x5ee <gpio_pin_direction_initialize+0x7e>
+ 5ea:	88 0f       	add	r24, r24
+ 5ec:	99 1f       	adc	r25, r25
+ 5ee:	4a 95       	dec	r20
+ 5f0:	e2 f7       	brpl	.-8      	; 0x5ea <gpio_pin_direction_initialize+0x7a>
+ 5f2:	82 2b       	or	r24, r18
+ 5f4:	80 83       	st	Z, r24
+ 5f6:	81 e0       	ldi	r24, 0x01	; 1
+ 5f8:	08 95       	ret
+ 5fa:	80 e0       	ldi	r24, 0x00	; 0
+ 5fc:	08 95       	ret
+ 5fe:	80 e0       	ldi	r24, 0x00	; 0
+ 600:	08 95       	ret
+ 602:	80 e0       	ldi	r24, 0x00	; 0
+ 604:	08 95       	ret
+ 606:	80 e0       	ldi	r24, 0x00	; 0
+ 608:	08 95       	ret
+
+0000060a <gpio_pin_write_logic>:
+ 60a:	00 97       	sbiw	r24, 0x00	; 0
+ 60c:	09 f4       	brne	.+2      	; 0x610 <gpio_pin_write_logic+0x6>
+ 60e:	42 c0       	rjmp	.+132    	; 0x694 <gpio_pin_write_logic+0x8a>
+ 610:	66 23       	and	r22, r22
+ 612:	19 f0       	breq	.+6      	; 0x61a <gpio_pin_write_logic+0x10>
+ 614:	61 30       	cpi	r22, 0x01	; 1
+ 616:	01 f1       	breq	.+64     	; 0x658 <gpio_pin_write_logic+0x4e>
+ 618:	3f c0       	rjmp	.+126    	; 0x698 <gpio_pin_write_logic+0x8e>
+ 61a:	fc 01       	movw	r30, r24
+ 61c:	80 81       	ld	r24, Z
+ 61e:	e8 2f       	mov	r30, r24
+ 620:	e7 70       	andi	r30, 0x07	; 7
+ 622:	f0 e0       	ldi	r31, 0x00	; 0
+ 624:	ee 0f       	add	r30, r30
+ 626:	ff 1f       	adc	r31, r31
+ 628:	e6 59       	subi	r30, 0x96	; 150
+ 62a:	ff 4f       	sbci	r31, 0xFF	; 255
+ 62c:	01 90       	ld	r0, Z+
+ 62e:	f0 81       	ld	r31, Z
+ 630:	e0 2d       	mov	r30, r0
+ 632:	40 81       	ld	r20, Z
+ 634:	86 95       	lsr	r24
+ 636:	86 95       	lsr	r24
+ 638:	86 95       	lsr	r24
+ 63a:	87 70       	andi	r24, 0x07	; 7
+ 63c:	21 e0       	ldi	r18, 0x01	; 1
+ 63e:	30 e0       	ldi	r19, 0x00	; 0
+ 640:	b9 01       	movw	r22, r18
+ 642:	02 c0       	rjmp	.+4      	; 0x648 <gpio_pin_write_logic+0x3e>
+ 644:	66 0f       	add	r22, r22
+ 646:	77 1f       	adc	r23, r23
+ 648:	8a 95       	dec	r24
+ 64a:	e2 f7       	brpl	.-8      	; 0x644 <gpio_pin_write_logic+0x3a>
+ 64c:	cb 01       	movw	r24, r22
+ 64e:	80 95       	com	r24
+ 650:	84 23       	and	r24, r20
+ 652:	80 83       	st	Z, r24
+ 654:	81 e0       	ldi	r24, 0x01	; 1
+ 656:	08 95       	ret
+ 658:	fc 01       	movw	r30, r24
+ 65a:	80 81       	ld	r24, Z
+ 65c:	e8 2f       	mov	r30, r24
+ 65e:	e7 70       	andi	r30, 0x07	; 7
+ 660:	f0 e0       	ldi	r31, 0x00	; 0
+ 662:	ee 0f       	add	r30, r30
+ 664:	ff 1f       	adc	r31, r31
+ 666:	e6 59       	subi	r30, 0x96	; 150
+ 668:	ff 4f       	sbci	r31, 0xFF	; 255
+ 66a:	01 90       	ld	r0, Z+
+ 66c:	f0 81       	ld	r31, Z
+ 66e:	e0 2d       	mov	r30, r0
+ 670:	40 81       	ld	r20, Z
+ 672:	86 95       	lsr	r24
+ 674:	86 95       	lsr	r24
+ 676:	86 95       	lsr	r24
+ 678:	87 70       	andi	r24, 0x07	; 7
+ 67a:	21 e0       	ldi	r18, 0x01	; 1
+ 67c:	30 e0       	ldi	r19, 0x00	; 0
+ 67e:	b9 01       	movw	r22, r18
+ 680:	02 c0       	rjmp	.+4      	; 0x686 <gpio_pin_write_logic+0x7c>
+ 682:	66 0f       	add	r22, r22
+ 684:	77 1f       	adc	r23, r23
+ 686:	8a 95       	dec	r24
+ 688:	e2 f7       	brpl	.-8      	; 0x682 <gpio_pin_write_logic+0x78>
+ 68a:	cb 01       	movw	r24, r22
+ 68c:	84 2b       	or	r24, r20
+ 68e:	80 83       	st	Z, r24
+ 690:	81 e0       	ldi	r24, 0x01	; 1
+ 692:	08 95       	ret
+ 694:	80 e0       	ldi	r24, 0x00	; 0
+ 696:	08 95       	ret
+ 698:	80 e0       	ldi	r24, 0x00	; 0
+ 69a:	08 95       	ret
+
+0000069c <gpio_pin_intialize>:
+ 69c:	cf 93       	push	r28
+ 69e:	df 93       	push	r29
+ 6a0:	00 97       	sbiw	r24, 0x00	; 0
+ 6a2:	69 f0       	breq	.+26     	; 0x6be <gpio_pin_intialize+0x22>
+ 6a4:	ec 01       	movw	r28, r24
+ 6a6:	0e 94 b8 02 	call	0x570	; 0x570 <gpio_pin_direction_initialize>
+ 6aa:	98 81       	ld	r25, Y
+ 6ac:	96 ff       	sbrs	r25, 6
+ 6ae:	08 c0       	rjmp	.+16     	; 0x6c0 <gpio_pin_intialize+0x24>
+ 6b0:	97 fb       	bst	r25, 7
+ 6b2:	66 27       	eor	r22, r22
+ 6b4:	60 f9       	bld	r22, 0
+ 6b6:	ce 01       	movw	r24, r28
+ 6b8:	0e 94 05 03 	call	0x60a	; 0x60a <gpio_pin_write_logic>
+ 6bc:	01 c0       	rjmp	.+2      	; 0x6c0 <gpio_pin_intialize+0x24>
+ 6be:	80 e0       	ldi	r24, 0x00	; 0
+ 6c0:	df 91       	pop	r29
+ 6c2:	cf 91       	pop	r28
+ 6c4:	08 95       	ret
+
+000006c6 <gpio_pin_read_logic>:
+ 6c6:	00 97       	sbiw	r24, 0x00	; 0
+ 6c8:	f9 f0       	breq	.+62     	; 0x708 <gpio_pin_read_logic+0x42>
+ 6ca:	61 15       	cp	r22, r1
+ 6cc:	71 05       	cpc	r23, r1
+ 6ce:	f1 f0       	breq	.+60     	; 0x70c <gpio_pin_read_logic+0x46>
+ 6d0:	fc 01       	movw	r30, r24
+ 6d2:	20 81       	ld	r18, Z
+ 6d4:	e2 2f       	mov	r30, r18
+ 6d6:	e7 70       	andi	r30, 0x07	; 7
+ 6d8:	f0 e0       	ldi	r31, 0x00	; 0
+ 6da:	ee 0f       	add	r30, r30
+ 6dc:	ff 1f       	adc	r31, r31
+ 6de:	ee 58       	subi	r30, 0x8E	; 142
+ 6e0:	ff 4f       	sbci	r31, 0xFF	; 255
+ 6e2:	01 90       	ld	r0, Z+
+ 6e4:	f0 81       	ld	r31, Z
+ 6e6:	e0 2d       	mov	r30, r0
+ 6e8:	80 81       	ld	r24, Z
+ 6ea:	26 95       	lsr	r18
+ 6ec:	26 95       	lsr	r18
+ 6ee:	26 95       	lsr	r18
+ 6f0:	27 70       	andi	r18, 0x07	; 7
+ 6f2:	90 e0       	ldi	r25, 0x00	; 0
+ 6f4:	02 c0       	rjmp	.+4      	; 0x6fa <gpio_pin_read_logic+0x34>
+ 6f6:	95 95       	asr	r25
+ 6f8:	87 95       	ror	r24
+ 6fa:	2a 95       	dec	r18
+ 6fc:	e2 f7       	brpl	.-8      	; 0x6f6 <gpio_pin_read_logic+0x30>
+ 6fe:	81 70       	andi	r24, 0x01	; 1
+ 700:	fb 01       	movw	r30, r22
+ 702:	80 83       	st	Z, r24
+ 704:	81 e0       	ldi	r24, 0x01	; 1
+ 706:	08 95       	ret
+ 708:	80 e0       	ldi	r24, 0x00	; 0
+ 70a:	08 95       	ret
+ 70c:	80 e0       	ldi	r24, 0x00	; 0
+ 70e:	08 95       	ret
+
+00000710 <gpio_pin_toggle_logic>:
+ 710:	00 97       	sbiw	r24, 0x00	; 0
+ 712:	f1 f0       	breq	.+60     	; 0x750 <gpio_pin_toggle_logic+0x40>
+ 714:	fc 01       	movw	r30, r24
+ 716:	80 81       	ld	r24, Z
+ 718:	e8 2f       	mov	r30, r24
+ 71a:	e7 70       	andi	r30, 0x07	; 7
+ 71c:	f0 e0       	ldi	r31, 0x00	; 0
+ 71e:	ee 0f       	add	r30, r30
+ 720:	ff 1f       	adc	r31, r31
+ 722:	e6 59       	subi	r30, 0x96	; 150
+ 724:	ff 4f       	sbci	r31, 0xFF	; 255
+ 726:	01 90       	ld	r0, Z+
+ 728:	f0 81       	ld	r31, Z
+ 72a:	e0 2d       	mov	r30, r0
+ 72c:	40 81       	ld	r20, Z
+ 72e:	86 95       	lsr	r24
+ 730:	86 95       	lsr	r24
+ 732:	86 95       	lsr	r24
+ 734:	87 70       	andi	r24, 0x07	; 7
+ 736:	21 e0       	ldi	r18, 0x01	; 1
+ 738:	30 e0       	ldi	r19, 0x00	; 0
+ 73a:	b9 01       	movw	r22, r18
+ 73c:	02 c0       	rjmp	.+4      	; 0x742 <gpio_pin_toggle_logic+0x32>
+ 73e:	66 0f       	add	r22, r22
+ 740:	77 1f       	adc	r23, r23
+ 742:	8a 95       	dec	r24
+ 744:	e2 f7       	brpl	.-8      	; 0x73e <gpio_pin_toggle_logic+0x2e>
+ 746:	cb 01       	movw	r24, r22
+ 748:	84 27       	eor	r24, r20
+ 74a:	80 83       	st	Z, r24
+ 74c:	81 e0       	ldi	r24, 0x01	; 1
+ 74e:	08 95       	ret
+ 750:	80 e0       	ldi	r24, 0x00	; 0
+ 752:	08 95       	ret
+
+00000754 <gpio_port_direction_initialize>:
+ 754:	00 97       	sbiw	r24, 0x00	; 0
+ 756:	39 f1       	breq	.+78     	; 0x7a6 <gpio_port_direction_initialize+0x52>
+ 758:	dc 01       	movw	r26, r24
+ 75a:	2c 91       	ld	r18, X
+ 75c:	23 fb       	bst	r18, 3
+ 75e:	33 27       	eor	r19, r19
+ 760:	30 f9       	bld	r19, 0
+ 762:	23 ff       	sbrs	r18, 3
+ 764:	03 c0       	rjmp	.+6      	; 0x76c <gpio_port_direction_initialize+0x18>
+ 766:	31 30       	cpi	r19, 0x01	; 1
+ 768:	79 f0       	breq	.+30     	; 0x788 <gpio_port_direction_initialize+0x34>
+ 76a:	1f c0       	rjmp	.+62     	; 0x7aa <gpio_port_direction_initialize+0x56>
+ 76c:	dc 01       	movw	r26, r24
+ 76e:	ec 91       	ld	r30, X
+ 770:	e7 70       	andi	r30, 0x07	; 7
+ 772:	f0 e0       	ldi	r31, 0x00	; 0
+ 774:	ee 0f       	add	r30, r30
+ 776:	ff 1f       	adc	r31, r31
+ 778:	e6 58       	subi	r30, 0x86	; 134
+ 77a:	ff 4f       	sbci	r31, 0xFF	; 255
+ 77c:	01 90       	ld	r0, Z+
+ 77e:	f0 81       	ld	r31, Z
+ 780:	e0 2d       	mov	r30, r0
+ 782:	10 82       	st	Z, r1
+ 784:	81 e0       	ldi	r24, 0x01	; 1
+ 786:	08 95       	ret
+ 788:	dc 01       	movw	r26, r24
+ 78a:	ec 91       	ld	r30, X
+ 78c:	e7 70       	andi	r30, 0x07	; 7
+ 78e:	f0 e0       	ldi	r31, 0x00	; 0
+ 790:	ee 0f       	add	r30, r30
+ 792:	ff 1f       	adc	r31, r31
+ 794:	e6 58       	subi	r30, 0x86	; 134
+ 796:	ff 4f       	sbci	r31, 0xFF	; 255
+ 798:	01 90       	ld	r0, Z+
+ 79a:	f0 81       	ld	r31, Z
+ 79c:	e0 2d       	mov	r30, r0
+ 79e:	8f ef       	ldi	r24, 0xFF	; 255
+ 7a0:	80 83       	st	Z, r24
+ 7a2:	81 e0       	ldi	r24, 0x01	; 1
+ 7a4:	08 95       	ret
+ 7a6:	80 e0       	ldi	r24, 0x00	; 0
+ 7a8:	08 95       	ret
+ 7aa:	80 e0       	ldi	r24, 0x00	; 0
+ 7ac:	08 95       	ret
+
+000007ae <gpio_port_write_logic>:
+std_ReturnType gpio_port_write_logic (const port_config_t * _port , uint8 logic )
+{
+	uint8 ret = E_OK ;
+	if ( NULL == _port  )
+ 7ae:	00 97       	sbiw	r24, 0x00	; 0
+ 7b0:	71 f0       	breq	.+28     	; 0x7ce <gpio_port_write_logic+0x20>
+		
+		ret = E_NOT_OK ; 
+	}
+	else {
+		
+		*PORT_registers[_port->port] = logic ; 
+ 7b2:	dc 01       	movw	r26, r24
+ 7b4:	ec 91       	ld	r30, X
+ 7b6:	e7 70       	andi	r30, 0x07	; 7
+ 7b8:	f0 e0       	ldi	r31, 0x00	; 0
+ 7ba:	ee 0f       	add	r30, r30
+ 7bc:	ff 1f       	adc	r31, r31
+ 7be:	e6 59       	subi	r30, 0x96	; 150
+ 7c0:	ff 4f       	sbci	r31, 0xFF	; 255
+ 7c2:	01 90       	ld	r0, Z+
+ 7c4:	f0 81       	ld	r31, Z
+ 7c6:	e0 2d       	mov	r30, r0
+ 7c8:	60 83       	st	Z, r22
+		ret= E_OK ; 
+ 7ca:	81 e0       	ldi	r24, 0x01	; 1
+ 7cc:	08 95       	ret
+{
+	uint8 ret = E_OK ;
+	if ( NULL == _port  )
+	{
+		
+		ret = E_NOT_OK ; 
+ 7ce:	80 e0       	ldi	r24, 0x00	; 0
+		
+		*PORT_registers[_port->port] = logic ; 
+		ret= E_OK ; 
+	}
+	return ret ;
+}
+ 7d0:	08 95       	ret
+
+000007d2 <_exit>:
+ 7d2:	f8 94       	cli
+
+000007d4 <__stop_program>:
+ 7d4:	ff cf       	rjmp	.-2      	; 0x7d4 <__stop_program>
